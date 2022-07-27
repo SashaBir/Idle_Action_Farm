@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using IdleActionFarm.PhysicsMovement;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IDirection, IRotation
 {
     public float Horizontal { get { return (snapX) ? SnapFloat(input.x, AxisOptions.Horizontal) : input.x; } }
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
-
+    public float Angle { get { return Vector2.SignedAngle(Direction, Vector2.up); } }
+    
     public float HandleRange
     {
         get { return handleRange; }
