@@ -10,6 +10,10 @@ namespace IdleActionFarm.PhysicsMovement
 
         private void OnCollisionEnter(Collision collision) => _normal = collision.contacts[0].normal;
 
-        public Vector3 Project(Vector3 direction) => direction - Vector3.Dot(_normal, direction) * _normal;
+        public Vector3 Project(Vector3 direction)
+        {
+            Vector3 newDirection = new Vector3(direction.x, 0, direction.y);
+            return newDirection - Vector3.Dot(_normal, newDirection) * _normal;
+        }
     }
 }
