@@ -1,4 +1,4 @@
-﻿using IdleActionFarm.PhysicsMovement;
+﻿using IdleActionFarm.Physics;
 using UnityEngine;
 using Zenject;
 

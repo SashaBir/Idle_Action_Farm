@@ -1,21 +1,23 @@
-﻿using System;
+﻿using IdleActionFarm.GameplayObjects;
 using UnityEngine;
 
-namespace IdleActionFarm.GameplayObjects
+namespace IdleActionFarm.Physics
 {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
-    public class Braid : MonoBehaviour
+    public class GrassSlicer : MonoBehaviour
     {
+        [SerializeField] private Vector3 _planeWorldDirection;
+        
         private void OnCollisionEnter(Collision collision)
         {
             if (collision.transform.TryGetComponent(out Grass grass) == false)
                 return;
 
             Vector3 planeWorldPosition = transform.position;
-            Vector3 planeWorldDirection = -collision.contacts[0].normal;
+            grass.Slice(planeWorldPosition, _planeWorldDirection);
             
-            grass.Slice(planeWorldPosition, planeWorldDirection);
+            //print($"planeWorldPosition: {planeWorldPosition}\n planeWorldDirection: {_planeWorldDirection}");
         }
     }
 }

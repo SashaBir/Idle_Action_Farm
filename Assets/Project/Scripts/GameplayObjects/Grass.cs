@@ -1,22 +1,49 @@
-﻿using UnityEngine;
+﻿using System;
+using EzySlice;
+using UnityEngine;
 
 namespace IdleActionFarm.GameplayObjects
 {
+    [RequireComponent(typeof(MeshRenderer))]
+    [RequireComponent(typeof(Collider))]
     public class Grass : MonoBehaviour
     {
-        [SerializeField] [Min(0)] private int _maximumSliced;
+        private Material _material;
+        private SlicedHull _slicedHull;
 
-        private int _countSliced = 0;
-        
+        private void Awake() => _material = GetComponent<MeshRenderer>().material;
+
         public void Slice(Vector3 planeWorldPosition, Vector3 planeWorldDirection)
         {
-            if (_countSliced >= _maximumSliced)
-            {
-                Destroy(gameObject);
+            _slicedHull = gameObject.Slice(planeWorldPosition, planeWorldDirection, _material);
+            if (_slicedHull is null)
                 return;
-            }
 
-            _countSliced++;
+            CreateGrassPart();
+            CreateHull();
+
+            Destroy(gameObject);
         }
+
+        
+        private void CreateGrassPart()
+        {
+            GameObject grass = CreateHull();
+            grass.AddComponent<GrassPart>();
+        }
+
+        private GameObject CreateHull()
+        {
+            GameObject hull = _slicedHull.CreateLowerHull(gameObject, _material);
+            
+            MeshCollider meshCollider = hull.AddComponent<MeshCollider>();
+            meshCollider.convex = true;
+            
+            MoveToInitialPosition(hull.transform);
+
+            return hull;
+        }
+        
+        private void MoveToInitialPosition(Transform hull) => hull.position = transform.position;
     }
 }

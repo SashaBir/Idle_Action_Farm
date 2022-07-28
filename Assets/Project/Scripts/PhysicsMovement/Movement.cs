@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Zenject;
 
-namespace IdleActionFarm.PhysicsMovement
+namespace IdleActionFarm.Physics
 {
     public class Movement : MonoBehaviour
     {

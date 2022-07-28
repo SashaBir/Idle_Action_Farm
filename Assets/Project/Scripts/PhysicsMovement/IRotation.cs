@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace IdleActionFarm.PhysicsMovement
+namespace IdleActionFarm.Physics
 {
     public interface IRotation
     {

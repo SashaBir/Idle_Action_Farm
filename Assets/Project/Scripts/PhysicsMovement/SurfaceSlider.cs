@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace IdleActionFarm.PhysicsMovement
+namespace IdleActionFarm.Physics
 {
     [RequireComponent(typeof(Collider))]
     [RequireComponent(typeof(Rigidbody))]
@@ -8,7 +8,13 @@ namespace IdleActionFarm.PhysicsMovement
     {
         private Vector3 _normal = Vector3.zero;
 
-        private void OnCollisionEnter(Collision collision) => _normal = collision.contacts[0].normal;
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.transform.GetComponent<SurfaceGround>() == null)
+                return;
+            
+            _normal = collision.contacts[0].normal;
+        }
 
         public Vector3 Project(Vector3 direction)
         {
