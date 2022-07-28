@@ -19,7 +19,7 @@ namespace IdleActionFarm.Physics
         {
             if (_direction.Direction == Vector2.zero)
                 return;
-            
+
             Move();
         }
 

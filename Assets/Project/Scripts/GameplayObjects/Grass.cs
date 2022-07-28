@@ -29,16 +29,15 @@ namespace IdleActionFarm.GameplayObjects
         private void CreateGrassPart()
         {
             GameObject grass = CreateHull();
+            MeshCollider meshCollider = grass.AddComponent<MeshCollider>();
+            meshCollider.convex = true;
+
             grass.AddComponent<GrassPart>();
         }
 
         private GameObject CreateHull()
         {
             GameObject hull = _slicedHull.CreateLowerHull(gameObject, _material);
-            
-            MeshCollider meshCollider = hull.AddComponent<MeshCollider>();
-            meshCollider.convex = true;
-            
             MoveToInitialPosition(hull.transform);
 
             return hull;
