@@ -1,11 +1,12 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace IdleActionFarm.GameplayObjects
 {
     [Serializable]
-    public class GrassSpawner : MonoBehaviour
+    public class VegetationSpawner : MonoBehaviour
     {
         [SerializeField] private Grass _grass;
         [SerializeField] private Transform _initialPosition;
@@ -13,9 +14,15 @@ namespace IdleActionFarm.GameplayObjects
         [SerializeField] private int _lenght;
         [SerializeField] private int _width;
         [SerializeField] private Vector3 _offset;
-        [SerializeField] [Min(0)] private float _timeReloaded;
 
+        private DiContainer _diContainer;
+
+        [Inject]
+        private void Construct(DiContainer diContainer) => _diContainer = diContainer;
+        
         private void Awake() => Spawn();
+
+        private void CreateGrass(Vector3 position) => _diContainer.InstantiatePrefab(_grass, position, _grass.transform.rotation, _container);
 
         private void Spawn()
         {
@@ -24,8 +31,7 @@ namespace IdleActionFarm.GameplayObjects
             {
                 for (int j = 0; j < _width; j++)
                 {
-                    Grass grass = CreateGrass(position);
-                    Respawn(grass);
+                    CreateGrass(position);
                     position.x += _offset.x;
                 }
 
@@ -33,17 +39,5 @@ namespace IdleActionFarm.GameplayObjects
                 position.z += _offset.z;
             }
         }
-
-        private async UniTaskVoid Respawn(Grass grass)
-        {
-            Vector3 position = grass.transform.position;
-            await UniTask.WaitWhile(() => grass != null);
-            await UniTask.Delay(TimeSpan.FromSeconds(_timeReloaded));
-
-            Grass createdGrass = CreateGrass(position);
-            Respawn(createdGrass);
-        }
-        
-        private Grass CreateGrass(Vector3 position) => Instantiate(_grass, position, _grass.transform.rotation, _container);
     }
 }

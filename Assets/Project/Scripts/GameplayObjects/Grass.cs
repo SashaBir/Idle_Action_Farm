@@ -1,48 +1,42 @@
 ﻿using System;
-using EzySlice;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace IdleActionFarm.GameplayObjects
 {
-    [RequireComponent(typeof(MeshRenderer))]
     [RequireComponent(typeof(Collider))]
-    public class Grass : MonoBehaviour
+    public class Grass : MonoBehaviour, ISliceable
     {
-        private Material _material;
-        private SlicedHull _slicedHull;
+        [SerializeField] private GameObject _greenery;
+        [SerializeField] [Min(0)] private float _reloadeTime;
 
-        private void Awake() => _material = GetComponent<MeshRenderer>().material;
+        private BlockSpawner _spawner;
+        private TimeSpan _reloaded;
 
-        public void Slice(Vector3 planeWorldPosition, Vector3 planeWorldDirection)
-        {
-            _slicedHull = gameObject.Slice(planeWorldPosition, planeWorldDirection, _material);
-            if (_slicedHull is null)
-                return;
-
-            CreateGrassPart();
-            CreateHull();
-
-            Destroy(gameObject);
-        }
-
+        public bool AlreadySliced { get; private set; } = false;
         
-        private void CreateGrassPart()
-        {
-            GameObject grass = CreateHull();
-            MeshCollider meshCollider = grass.AddComponent<MeshCollider>();
-            meshCollider.convex = true;
-
-            grass.AddComponent<GrassPart>();
-        }
-
-        private GameObject CreateHull()
-        {
-            GameObject hull = _slicedHull.CreateLowerHull(gameObject, _material);
-            MoveToInitialPosition(hull.transform);
-
-            return hull;
-        }
+        [Inject]
+        private void Construct(BlockSpawner spawner) => _spawner = spawner;
         
-        private void MoveToInitialPosition(Transform hull) => hull.position = transform.position;
+        private void Awake() => _reloaded = TimeSpan.FromSeconds(_reloadeTime);
+
+        public void Slice()
+        {
+            AlreadySliced = true;
+            
+            _greenery.SetActive(false);
+            _spawner.Spawn(transform.position);
+            
+            Reload();
+        }
+
+        private async UniTaskVoid Reload()
+        {
+            await UniTask.Delay(_reloaded);
+            _greenery.SetActive(true);
+            
+            AlreadySliced = false;
+        }
     }
 }

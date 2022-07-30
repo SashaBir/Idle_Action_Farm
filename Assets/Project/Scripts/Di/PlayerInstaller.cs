@@ -8,11 +8,16 @@ namespace IdleActionFarm.Di
     {
         [Header("Direction and Rotation")]
         [SerializeField] private Joystick _joystick;
-        
+
+        [Header("Grass")]
+        [SerializeField] private BlockCollector blockCollector;
+
         public override void InstallBindings()
         {
             BindDirection();
             BindRotation();
+
+            BindGrassPartCollector();
         }
 
         private void BindDirection()
@@ -31,6 +36,15 @@ namespace IdleActionFarm.Di
                 .FromInstance(_joystick)
                 .AsSingle()
                 .NonLazy();
+        }
+
+        private void BindGrassPartCollector()
+        {
+            Container
+               .Bind<ICollector>()
+               .FromInstance(blockCollector)
+               .AsSingle()
+               .NonLazy();
         }
     }
 }
