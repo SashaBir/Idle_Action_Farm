@@ -3,7 +3,7 @@
 namespace IdleActionFarm.GameplayObjects
 {
     [RequireComponent(typeof(Collider))]
-    public class GrassBlock : MonoBehaviour, ICollectable, IBlock
+    public class Block : MonoBehaviour, ICollectable, IBlock
     {
         public bool IsCollected { get; private set; } = false;
         

@@ -1,5 +1,7 @@
-﻿using IdleActionFarm.Physics;
+﻿using System;
+using IdleActionFarm.Physics;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +12,7 @@ namespace IdleActionFarm.GameplayObjects
         [SerializeField] private Transform _initialPosition;
         [SerializeField] private Transform _container;
 
-        private Queue<GameObject> _stacks = new Queue<GameObject>();
+        private List<GameObject> _blocks = new List<GameObject>();
         private ICollector _collector;
         private BlockDistributor _distributor;
 
@@ -22,15 +24,27 @@ namespace IdleActionFarm.GameplayObjects
 
         private void OnDisable() => _collector.OnAccumulated -= Add;
 
+        public IEnumerable<GameObject> Blocks
+        {
+            get
+            {
+                _blocks.Reverse();
+                IEnumerable<GameObject> blocks = _blocks;
+
+                _blocks = new List<GameObject>();
+                _collector.Clear();
+                
+                return blocks;
+            }
+        }
+        
         private void Add(Transform block)
         {
+            Vector3 offset = new Vector3(0, block.localScale.y, 0) * _blocks.Count;
+            _distributor.MoveAlongTrajectory(block, _initialPosition, offset);
+            _blocks.Add(block.gameObject);
+            
             block.SetParent(_container);
-            
-            Vector3 offset = new Vector3(0, block.transform.lossyScale.y, 0) * _stacks.Count;
-            _distributor.MoveAlongTrajectory(block, () => _initialPosition.position + offset);
-            _stacks.Enqueue(block.gameObject);
-            
-            print(_initialPosition.position + offset);
         }
     }
 }

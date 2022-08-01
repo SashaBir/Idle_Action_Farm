@@ -30,5 +30,7 @@ namespace IdleActionFarm.Physics
             _currentCount++;
             OnAccumulated.Invoke(other.transform);
         }
+
+        public void Clear() => _currentCount = 0;
     }
 }

@@ -6,5 +6,7 @@ namespace IdleActionFarm.Physics
     public interface ICollector
     {
         event Action<Transform> OnAccumulated;
+
+        void Clear();
     }
 }
