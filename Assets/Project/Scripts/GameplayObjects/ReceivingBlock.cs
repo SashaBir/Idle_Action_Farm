@@ -38,7 +38,7 @@ namespace IdleActionFarm.GameplayObjects
             {
                 await UniTask.Delay(_time);
                 
-                _blockDistributor.MoveAlongTrajectory(block.transform, _point, Vector3.zero);
+                _blockDistributor.MoveForward(block.transform, _point, Vector3.zero);
                 Destroy(block, _durationDestoyedBlockAfterReceived);
             }
         }

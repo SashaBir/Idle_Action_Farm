@@ -9,7 +9,7 @@ namespace IdleActionFarm.GameplayObjects
     public class VegetationSpawner : MonoBehaviour
     {
         [SerializeField] private Grass _grass;
-        [SerializeField] private Transform _initialPosition;
+        [SerializeField] private Transform _initial;
         [SerializeField] private Transform _container;
         [SerializeField] private int _lenght;
         [SerializeField] private int _width;
@@ -26,7 +26,16 @@ namespace IdleActionFarm.GameplayObjects
 
         private void Spawn()
         {
-            Vector3 position = _initialPosition.position;
+            var positionPosition = _initial.position;
+            Vector3 started = new Vector3()
+            {
+                x = positionPosition.x - (_offset.x * _width * 0.5f), 
+                y = positionPosition.y,
+                z = positionPosition.z - (_offset.z * _lenght * 0.5f)
+            };
+
+            Vector3 position = started;
+            
             for (int i = 0; i < _lenght; i++)
             {
                 for (int j = 0; j < _width; j++)
@@ -35,7 +44,7 @@ namespace IdleActionFarm.GameplayObjects
                     position.x += _offset.x;
                 }
 
-                position.x = _initialPosition.position.x;
+                position.x = started.x;
                 position.z += _offset.z;
             }
         }

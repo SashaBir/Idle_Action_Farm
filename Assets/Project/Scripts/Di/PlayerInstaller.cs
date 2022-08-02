@@ -1,4 +1,5 @@
-﻿using IdleActionFarm.Physics;
+﻿using IdleActionFarm.GameplayObjects;
+using IdleActionFarm.Physics;
 using UnityEngine;
 using Zenject;
 
@@ -12,12 +13,17 @@ namespace IdleActionFarm.Di
         [Header("Grass")]
         [SerializeField] private BlockCollector blockCollector;
 
+        [Header("Mowing")] 
+        [SerializeField] private Mower _mower;
+
         public override void InstallBindings()
         {
             BindDirection();
             BindRotation();
 
             BindGrassPartCollector();
+
+            BindMower();
         }
 
         private void BindDirection()
@@ -45,6 +51,15 @@ namespace IdleActionFarm.Di
                .FromInstance(blockCollector)
                .AsSingle()
                .NonLazy();
+        }
+
+        private void BindMower()
+        {
+            Container
+                .Bind<Mower>()
+                .FromInstance(_mower)
+                .AsSingle()
+                .NonLazy();
         }
     }
 }

@@ -40,11 +40,13 @@ namespace IdleActionFarm.GameplayObjects
         
         private void Add(Transform block)
         {
-            Vector3 offset = new Vector3(0, block.localScale.y, 0) * _blocks.Count;
-            _distributor.MoveAlongTrajectory(block, _initialPosition, offset);
-            _blocks.Add(block.gameObject);
-            
             block.SetParent(_container);
+            UpdateTransform(block);
+            Vector3 offset = new Vector3(0, block.localScale.y, 0) * _blocks.Count;
+            _distributor.MoveForward(block, _initialPosition, offset);
+            _blocks.Add(block.gameObject);
         }
+
+        private void UpdateTransform(Transform block) =>  block.rotation = Quaternion.identity;
     }
 }

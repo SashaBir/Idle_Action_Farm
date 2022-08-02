@@ -9,6 +9,7 @@ namespace IdleActionFarm.GameplayObjects
     public class Grass : MonoBehaviour, ISliceable
     {
         [SerializeField] private GameObject _greenery;
+        [SerializeField] private ParticleSystem _slicedEffect;
         [SerializeField] [Min(0)] private float _reloadeTime;
 
         private BlockSpawner _spawner;
@@ -27,6 +28,7 @@ namespace IdleActionFarm.GameplayObjects
             
             _greenery.SetActive(false);
             _spawner.Spawn(transform.position);
+            _slicedEffect.Play();
             
             Reload();
         }

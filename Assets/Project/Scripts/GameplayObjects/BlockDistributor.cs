@@ -9,7 +9,7 @@ namespace IdleActionFarm.GameplayObjects
     {
         [SerializeField] [Min(0)] private float _duration;
 
-        public async UniTaskVoid MoveAlongTrajectory(Transform transform, Transform position, Vector3 offset)
+        public async UniTaskVoid MoveForward(Transform transform, Transform position, Vector3 offset)
         {
             Vector3 initial = transform.position;
             float expandedTime = 0;
