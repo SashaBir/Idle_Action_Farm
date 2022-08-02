@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2890094001222856131
 Transform:
@@ -4878,7 +4878,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4861000895766334928
 Transform:
@@ -4995,6 +4995,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Greenery
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 634bcdc78049851429516feebea2264b, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 634bcdc78049851429516feebea2264b, type: 3}
 --- !u!1 &2394214220220094092 stripped
@@ -5007,32 +5011,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 634bcdc78049851429516feebea2264b, type: 3}
   m_PrefabInstance: {fileID: 3312570098059144157}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3308788653040725643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2394214220220094092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b8571080928a5444983304707af9998, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DeformAxis: 1
-  Refinecurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  CurveInfluence: 0
-  predictable: 1
-  Frequency: 1.75
-  Phaze: 1
-  PeakMultiplier: 1
-  AnimatePhaze: 0
-  AnimationSpeed: 10
-  IsStatic: 0
-  UseEffector: 0
-  Effector: {fileID: 2394214220220094092}

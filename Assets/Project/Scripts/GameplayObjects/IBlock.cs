@@ -2,8 +2,10 @@
 
 namespace IdleActionFarm.GameplayObjects
 {
-    public interface IBlock
+    public interface IBlock : ICollectable
     {
         Transform Self { get; }
+        
+        int Price { get; }
     }
 }

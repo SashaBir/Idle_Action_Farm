@@ -1,7 +1,6 @@
-﻿using System;
-using IdleActionFarm.Physics;
+﻿using IdleActionFarm.Physics;
 using System.Collections.Generic;
-using System.Linq;
+using IdleActionFarm.Ui;
 using UnityEngine;
 using Zenject;
 
@@ -12,39 +11,41 @@ namespace IdleActionFarm.GameplayObjects
         [SerializeField] private Transform _initialPosition;
         [SerializeField] private Transform _container;
 
-        private List<GameObject> _blocks = new List<GameObject>();
+        private List<IBlock> _blocks = new List<IBlock>();
         private ICollector _collector;
         private BlockDistributor _distributor;
+        private UiPlayerStatus _uiPlayerStatus;
 
         [Inject]
-        private void Constructor(ICollector collector, BlockDistributor distributor) => 
-            (_collector, _distributor) = (collector, distributor);
+        private void Constructor(ICollector collector, BlockDistributor distributor, UiPlayerStatus playerStatus) => 
+            (_collector, _distributor, _uiPlayerStatus) = (collector, distributor, playerStatus);
 
         private void OnEnable() => _collector.OnAccumulated += Add;
 
         private void OnDisable() => _collector.OnAccumulated -= Add;
 
-        public IEnumerable<GameObject> Blocks
+        public IEnumerable<IBlock> TakeOffBlocks()
         {
-            get
-            {
-                _blocks.Reverse();
-                IEnumerable<GameObject> blocks = _blocks;
+            _blocks.Reverse();
+            IEnumerable<IBlock> blocks = _blocks;
 
-                _blocks = new List<GameObject>();
-                _collector.Clear();
-                
-                return blocks;
-            }
+            _blocks = new List<IBlock>();
+            _collector.Clear();
+            
+            _uiPlayerStatus.SetNumberOfBlockInStack(0);
+            
+            return blocks;
         }
         
-        private void Add(Transform block)
+        private void Add(IBlock block)
         {
-            block.SetParent(_container);
-            UpdateTransform(block);
-            Vector3 offset = new Vector3(0, block.localScale.y, 0) * _blocks.Count;
-            _distributor.MoveForward(block, _initialPosition, offset);
-            _blocks.Add(block.gameObject);
+            block.Self.SetParent(_container);
+            UpdateTransform(block.Self);
+            Vector3 offset = new Vector3(0, block.Self.localScale.y, 0) * _blocks.Count;
+            _distributor.MoveForward(block.Self, _initialPosition, offset);
+            _blocks.Add(block);
+            
+            _uiPlayerStatus.SetNumberOfBlockInStack(_blocks.Count);
         }
 
         private void UpdateTransform(Transform block) =>  block.rotation = Quaternion.identity;

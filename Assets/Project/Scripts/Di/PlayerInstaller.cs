@@ -1,5 +1,6 @@
 ﻿using IdleActionFarm.GameplayObjects;
 using IdleActionFarm.Physics;
+using IdleActionFarm.Ui;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,9 @@ namespace IdleActionFarm.Di
 {
     public class PlayerInstaller : MonoInstaller
     {
+        [Header("Ui")] 
+        [SerializeField] private UiPlayerStatus _uiPlayerStatus;
+        
         [Header("Direction and Rotation")]
         [SerializeField] private Joystick _joystick;
 
@@ -18,12 +22,23 @@ namespace IdleActionFarm.Di
 
         public override void InstallBindings()
         {
+            BindUiPlayerStatus();
+            
             BindDirection();
             BindRotation();
 
             BindGrassPartCollector();
 
             BindMower();
+        }
+
+        private void BindUiPlayerStatus()
+        {
+            Container
+                .Bind<UiPlayerStatus>()
+                .FromInstance(_uiPlayerStatus)
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindDirection()

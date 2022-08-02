@@ -1,11 +1,11 @@
 ﻿using System;
-using UnityEngine;
+using IdleActionFarm.GameplayObjects;
 
 namespace IdleActionFarm.Physics
 {
     public interface ICollector
     {
-        event Action<Transform> OnAccumulated;
+        event Action<IBlock> OnAccumulated;
 
         void Clear();
     }

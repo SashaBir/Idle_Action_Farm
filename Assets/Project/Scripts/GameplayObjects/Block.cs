@@ -3,12 +3,14 @@
 namespace IdleActionFarm.GameplayObjects
 {
     [RequireComponent(typeof(Collider))]
-    public class Block : MonoBehaviour, ICollectable, IBlock
+    public class Block : MonoBehaviour, IBlock
     {
-        public bool IsCollected { get; private set; } = false;
+        [field: SerializeField] public int Price { get; private set; }
         
-        public Transform Self => transform;
+        public bool IsCollected { get; private set; } = false;
 
+        public Transform Self => transform;
+        
         public void Collect() => IsCollected = true;
     }
 }

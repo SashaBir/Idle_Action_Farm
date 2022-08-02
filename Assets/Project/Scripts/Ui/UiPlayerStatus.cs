@@ -8,8 +8,8 @@ namespace IdleActionFarm.Ui
         [SerializeField] private TMP_Text _money;
         [SerializeField] private TMP_Text _numberOfBlockInStack;
 
-        public void SetMoney(int value) => _money.text = $"Money: {value}";
+        public void SetMoney(int value) => _money.text = value.ToString();
         
-        public void SetNumberOfBlockInStack(int value) => _numberOfBlockInStack.text = $"Block: {value}";
+        public void SetNumberOfBlockInStack(int value) => _numberOfBlockInStack.text = value.ToString();
     }
 }

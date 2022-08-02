@@ -24,21 +24,25 @@ namespace IdleActionFarm.GameplayObjects
 
         public void Slice()
         {
-            AlreadySliced = true;
-            
-            _greenery.SetActive(false);
             _spawner.Spawn(transform.position);
-            _slicedEffect.Play();
             
-            Reload();
+            TurnOff();
+            UniTask.Create(async () =>
+            {
+                await UniTask.Delay(_reloaded);
+                TurnOn();
+            });
         }
+        
+        private void TurnOn() => Turn(false, true);
 
-        private async UniTaskVoid Reload()
+        private void TurnOff() => Turn(true, false);
+        
+        private void Turn(bool alreadySliced, bool greenyAcivate)
         {
-            await UniTask.Delay(_reloaded);
-            _greenery.SetActive(true);
-            
-            AlreadySliced = false;
+            AlreadySliced = alreadySliced;
+            _greenery.SetActive(greenyAcivate);
+            _slicedEffect.Play();
         }
     }
 }

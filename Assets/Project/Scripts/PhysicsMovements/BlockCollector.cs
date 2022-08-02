@@ -10,25 +10,25 @@ namespace IdleActionFarm.Physics
     {
         [SerializeField][Min(0)] private int _maximumBlock;
 
-        public event Action<Transform> OnAccumulated = delegate { };
+        public event Action<IBlock> OnAccumulated = delegate { };
 
         private int _currentCount = 0;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out ICollectable collectable) == false)
+            if (other.TryGetComponent(out IBlock block) == false)
                 return;
 
-            if (collectable.IsCollected == true)
+            if (block.IsCollected == true)
                 return;
             
             if (_maximumBlock < _currentCount)
                 return;
             
-            collectable.Collect();
+            block.Collect();
             
             _currentCount++;
-            OnAccumulated.Invoke(other.transform);
+            OnAccumulated.Invoke(block);
         }
 
         public void Clear() => _currentCount = 0;
