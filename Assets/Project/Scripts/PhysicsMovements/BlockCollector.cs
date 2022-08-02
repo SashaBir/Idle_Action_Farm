@@ -22,12 +22,12 @@ namespace IdleActionFarm.Physics
             if (block.IsCollected == true)
                 return;
             
+            _currentCount++;
             if (_maximumBlock < _currentCount)
                 return;
             
             block.Collect();
             
-            _currentCount++;
             OnAccumulated.Invoke(block);
         }
 

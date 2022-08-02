@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using IdleActionFarm.Ui;
 using UnityEngine;
 using Zenject;
 
@@ -17,12 +16,12 @@ namespace IdleActionFarm.GameplayObjects
         [SerializeField] [Min(0)] private float _durationDestoyedBlockAfterReceived;
         
         private BlockDistributor _blockDistributor;
-        private UiPlayerStatus _uiPlayerStatus;
+        private PlayerStatus _playerStatus;
         private TimeSpan _time;
 
         [Inject]
-        private void Construct(BlockDistributor blockDistributor, UiPlayerStatus uiPlayerStatus) =>
-            (_blockDistributor, _uiPlayerStatus) = (blockDistributor, uiPlayerStatus);
+        private void Construct(BlockDistributor blockDistributor, PlayerStatus playerStatus) =>
+            (_blockDistributor, this._playerStatus) = (blockDistributor, playerStatus);
 
         private void Awake() => _time = TimeSpan.FromSeconds(_durationBetweenBlocks);
 
@@ -42,12 +41,18 @@ namespace IdleActionFarm.GameplayObjects
             {
                 await UniTask.Delay(_time);
                 
-                var block = array[i].Self;
-                _blockDistributor.MoveForward(block, _point, Vector3.zero);
-                Destroy(block.gameObject, _durationDestoyedBlockAfterReceived);
+                var block = array[i];
+                _playerStatus.AddMoney(block.Price);
+                _blockDistributor.MoveForward(block.Self, _point, Vector3.zero);
+                Destroy(block.Self.gameObject, _durationDestoyedBlockAfterReceived);
                 
-                _uiPlayerStatus.SetNumberOfBlockInStack(array.Length - i - 1);
+                _playerStatus.SetNumberOfBlockInStack(array.Length - i - 1);
             }
+
+            if (array.Length <= 0)
+                return;
+            
+            _playerStatus.AnimateMoney();
         }
     }
 }
