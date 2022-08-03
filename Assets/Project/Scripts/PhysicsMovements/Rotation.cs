@@ -12,7 +12,7 @@ namespace IdleActionFarm.Physics
         [Inject]
         private void Construct(IRotation rotation) => _rotation = rotation;
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (_rotation.Angle == 0f)
                 return;
