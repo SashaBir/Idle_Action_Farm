@@ -10,7 +10,7 @@ namespace IdleActionFarm.Di
         [Header("Ui")] 
         [SerializeField] private PlayerStatus _playerStatus;
         
-        [Header("Direction and Rotation")]
+        [Header("Input System")]
         [SerializeField] private Joystick _joystick;
 
         [Header("Grass")]

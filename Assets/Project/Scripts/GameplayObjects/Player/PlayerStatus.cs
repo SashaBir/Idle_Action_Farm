@@ -12,11 +12,16 @@ namespace IdleActionFarm.GameplayObjects
         [SerializeField] private TMP_Text _money;
         [SerializeField] private TMP_Text _numberOfBlockInStack;
 
-        [Header("AnimationsMoneys")]
+        [Header("Animations Moneys")]
         [SerializeField] private RectTransform _desingMoney;
         [SerializeField] private RectTransform _inital;
         [SerializeField] private RectTransform _final;
         [SerializeField] [Min(0)] private float _duration;
+
+        [Header("Vibration Money")]
+        [SerializeField] private RectTransform _vibrationMoney;
+        [SerializeField] [Min(0)] private float _vibrationDuration;
+        [SerializeField] [Min(0)] private float _vibrationStrenght;
 
         private Tween _tween;
         private int _numberOfmoney = 0;
@@ -36,6 +41,7 @@ namespace IdleActionFarm.GameplayObjects
             await UniTask.Delay(TimeSpan.FromSeconds(_duration));
             
             _desingMoney.gameObject.SetActive(false);
+            _vibrationMoney.DOShakePosition(_vibrationDuration, _vibrationStrenght);
         }
     }
 }

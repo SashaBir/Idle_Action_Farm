@@ -1204,6 +1204,9 @@ MonoBehaviour:
   _inital: {fileID: 1293448833}
   _final: {fileID: 1648888818}
   _duration: 1
+  _vibrationMoney: {fileID: 623892956}
+  _vibrationDuration: 0.75
+  _vibrationStrenght: 3
 --- !u!1 &334077080
 GameObject:
   m_ObjectHideFlags: 0
@@ -2035,7 +2038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0601a3298bcc4270ada432012397db92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiPlayerStatus: {fileID: 313167116}
+  _playerStatus: {fileID: 313167116}
   _joystick: {fileID: 521217468}
   blockCollector: {fileID: 313167112}
   _mower: {fileID: 313167115}
@@ -3851,7 +3854,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1461703477}
-  - component: {fileID: 1461703478}
   m_Layer: 0
   m_Name: Porter
   m_TagString: Untagged
@@ -3875,22 +3877,6 @@ Transform:
   m_Father: {fileID: 313167106}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1461703478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461703476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bada4c9bba6c41e2939a170d667587b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _container: {fileID: 1326051763}
-  _duration: 1
-  _minimumAngle: -18
-  _maximumAngle: 18
 --- !u!4 &1515385543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1621991540713508019, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}

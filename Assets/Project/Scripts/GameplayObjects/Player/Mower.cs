@@ -14,7 +14,7 @@ namespace IdleActionFarm.GameplayObjects
         [SerializeField] [Min(0)] private float _duration;
         [SerializeField] private ActivatorSlicer _activatorSlicer;
 
-        private CancellationTokenSource _tokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
         private IDirection _direction;
 
         [Inject]
@@ -22,11 +22,7 @@ namespace IdleActionFarm.GameplayObjects
         
         private void OnEnable()
         {
-            _button.onClick.AddListener(() =>
-            {
-                _tokenSource = new CancellationTokenSource();
-                Mow(_tokenSource.Token);
-            });
+            _button.onClick.AddListener(() => Mow(_tokenSource.Token));
             _direction.OnStartedDirection += StopMowing;
         }
 
