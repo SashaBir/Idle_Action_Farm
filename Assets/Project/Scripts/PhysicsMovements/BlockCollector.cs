@@ -8,7 +8,7 @@ namespace IdleActionFarm.Physics
     [RequireComponent(typeof(Rigidbody))]
     public class BlockCollector : MonoBehaviour, ICollector
     {
-        [SerializeField][Min(0)] private int _maximumBlock;
+        [SerializeField] [Min(0)] private int _maximumBlock;
 
         public event Action<IBlock> OnAccumulated = delegate { };
 
