@@ -10,7 +10,8 @@ namespace IdleActionFarm.Physics
         private IRotation _rotation;
 
         [Inject]
-        private void Construct(IRotation rotation) => _rotation = rotation;
+        private void Construct(IRotation rotation) =>
+            _rotation = rotation;
 
         private void FixedUpdate()
         {
